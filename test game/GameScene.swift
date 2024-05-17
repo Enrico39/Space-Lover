@@ -40,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var enemies: [SKSpriteNode] = []
     var introAnimationFrames: [SKTexture] = []
     let tapToPlayLabel = SKLabelNode(fontNamed: "Chalkduster")
+    var creditLabel = SKLabelNode(fontNamed: "Chalkduster")
     var animationNode: SKSpriteNode!
     var backgroundFrames: [SKTexture] = []
     var backgroundFrames2: [SKTexture] = []
@@ -94,6 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if tapToPlayLabel.parent != nil {
                 // Rimuovi le etichette di inizio gioco
                 tapToPlayLabel.removeFromParent()
+                 removeCreditLabels()
                 animationNode.removeFromParent()
                  highScoreLabel.removeFromParent()
                 logoNode.removeFromParent() // Rimuovi l'immagine del logo
@@ -245,18 +247,44 @@ extension GameScene{
     }
     
     func showTapToPlay() {
+        // Configurazione della label "Tap to Play"
         tapToPlayLabel.text = "Tap to Play"
         tapToPlayLabel.fontSize = 40
-         tapToPlayLabel.zPosition = 25
+        tapToPlayLabel.zPosition = 25
         tapToPlayLabel.position = CGPoint(x: frame.midX, y: frame.midY - 350)
         tapToPlayLabel.fontColor = UIColor.black
         addChild(tapToPlayLabel)
+        
+        // Animazione per la label "Tap to Play"
         let fadeOut = SKAction.fadeOut(withDuration: 0.8)
         let fadeIn = SKAction.fadeIn(withDuration: 0.8)
         let blinkSequence = SKAction.sequence([fadeOut, fadeIn])
         let repeatBlink = SKAction.repeatForever(blinkSequence)
         tapToPlayLabel.run(repeatBlink)
+        
+        // Creazione e configurazione delle label dei credits
+        let credits = ["Credits:", "Beniamino Nardone", "Enrico Madonna", "Michela D'Avino", "Sabrina Anna Desiderio"]
+        let fontSize: CGFloat = 30
+        let startY = frame.midY - 450
+        
+        for (index, credit) in credits.enumerated() {
+            creditLabel = SKLabelNode(text: credit)
+            creditLabel.fontSize = fontSize
+             creditLabel.zPosition = 35
+            creditLabel.position = CGPoint(x: frame.midX, y: startY - CGFloat(index) * (fontSize + 5)) // Spazio di 5 punti tra le righe
+            creditLabel.fontColor = UIColor.black
+            creditLabel.name = "creditLabel" // Assegna il nome "creditLabel"
+            creditLabel.fontName="Chalkduster"
+            addChild(creditLabel)
+        }
     }
+
+    func removeCreditLabels() {
+        self.enumerateChildNodes(withName: "creditLabel") { node, _ in
+            node.removeFromParent()
+        }
+    }
+
 }
 
 // MARK: OBSTACLES
