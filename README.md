@@ -1,5 +1,5 @@
 # Space Lover
-Foodie is an Endless Runner game, made for iOS using SpriteKit. It is actually available on the App Store
+Space Lover is an Endless Runner game, made for iOS using SpriteKit. It is actually available on the App Store
 
 ## Copyright Notice
 
